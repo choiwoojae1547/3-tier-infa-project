@@ -1,4 +1,4 @@
-$api_url = "http://10.0.2.82:3000/api/endpoint";
+$api_url = "http://10.0.138.145:3000/api/endpoint";
 
 $response = @file_get_contents($api_url); // suppress error output
 if ($response === FALSE) {
