@@ -1,66 +1,59 @@
-# 3-tier-infa-project
-# 3-Tier Web Application Example
+# 3-Tier Architecture Project
 
-이 프로젝트는 간단한 3-tier 웹 애플리케이션 아키텍처를 보여주는 예시입니다. 웹 서버(Web Tier)는 클라이언트의 요청을 받아 애플리케이션 서버(App Tier)와 통신하며, 애플리케이션 서버는 데이터베이스와 상호작용하여 데이터를 처리합니다.
+## 프로젝트 설명
+이 프로젝트는 3-tier 아키텍처를 기반으로 한 웹 애플리케이션 구현 예시입니다. 시스템은 세 가지 주요 계층으로 구성됩니다:
+1. **Web Tier (WAS)**: 사용자 요청을 처리하는 웹 서버 (Apache, PHP)
+2. **Application Tier**: API 요청을 처리하는 애플리케이션 서버 (Node.js, Express)
+3. **Database Tier**: 사용자 데이터와 관련된 정보를 저장하는 데이터베이스 서버 (MariaDB)
 
-## 프로젝트 구조
+## 아키텍처 구성
+- **Web Server**: Apache + PHP (index.php)
+- **Application Server**: Node.js + Express (server.js)
+- **Database Server**: MariaDB (users 테이블 포함)
 
-├── web-tier 
-│ 
-└── index.php # 웹 서버에서 실행되는 PHP 코드 
-├── app-tier 
-│
-├── server.js # 애플리케이션 서버 코드 (Node.js) 
-│ 
-└── db.js # 데이터베이스 연결 및 쿼리 처리
-└── README.md # 프로젝트 설명 (이 파일)
+## 기능
+- 사용자는 웹 서버를 통해 애플리케이션 서버에 HTTP 요청을 보냄
+- 애플리케이션 서버는 요청을 처리하고 JSON 형식으로 응답
+- 애플리케이션 서버는 MariaDB에서 사용자 데이터를 조회하거나 저장
+
+## 시스템 요구사항
+- Ubuntu 20.04 또는 그 이상
+- Node.js 14.x 이상
+- MariaDB 10.x 이상
+- Apache 2.x (웹 서버용)
+
+## 설치 및 실행 방법
+
+### 1. 애플리케이션 서버 설치 (Node.js)
+# Node.js 및 필요한 라이브러리 설치
+sudo apt update
+sudo apt install nodejs npm
+
+# 애플리케이션 서버 실행
+cd /path/to/your/project
+npm install
+node server.js
+
+### 2. 웹 서버 설정 (Apache + PHP)
+# Apache와 PHP 설치
+sudo apt update
+sudo apt install apache2 php libapache2-mod-php
+
+# 웹 서버에서 index.php 파일 설정
+sudo cp /path/to/your/index.php /var/www/html/
 
 
-## 기술 스택
+**###3. 데이터베이스 서버 설정 (MariaDB)**
+# MariaDB 설치
+sudo apt update
+sudo apt install mariadb-server
 
-- **웹 서버(Web Tier):** PHP
-- **애플리케이션 서버(App Tier):** Node.js + Express
-- **데이터베이스:** MariaDB (MySQL 호환)
+# MariaDB 접속 및 테이블 생성
+sudo mysql -u root -p
+CREATE DATABASE mydatabase;
+USE mydatabase;
+CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100));
 
-## 실행 방법
-
-### 1. 웹 서버(Web Tier) 실행
-
-웹 서버는 PHP로 작성되었습니다. 아래의 단계를 따라 웹 서버를 실행합니다.
-
-#### PHP 서버 실행 방법
-
-1. PHP가 설치되어 있는지 확인합니다. 설치되지 않았다면 [PHP 설치 방법](https://www.php.net/manual/en/install.php)을 참고하십시오.
-2. 웹 서버 폴더에서 `index.php` 파일을 실행합니다.
-웹 브라우저에서 http://localhost:8080에 접속하여 웹 서버의 동작을 확인합니다.
-
-2. 애플리케이션 서버(App Tier) 실행
-애플리케이션 서버는 Node.js와 Express로 작성되었습니다. 아래의 단계를 따라 애플리케이션 서버를 실행합니다.
-Node.js 및 Express 설치
-Node.js가 설치되어 있는지 확인합니다. 설치되지 않았다면 Node.js 설치 방법을 참고하십시오.
-애플리케이션 서버 폴더에서 server.js를 실행합니다.
-애플리케이션 서버는 기본적으로 http://localhost:3000에서 실행됩니다.
-
-3. 데이터베이스 설정
-이 애플리케이션은 MariaDB를 사용하여 데이터를 저장합니다. MariaDB 또는 MySQL 서버를 설치한 후, db.js에서 데이터베이스 연결 정보를 수정하십시오.
-MariaDB 설정
-MariaDB를 설치합니다. 설치 방법은 MariaDB 공식 문서에서 확인할 수 있습니다.
-데이터베이스를 생성하고, 애플리케이션이 사용할 테이블을 생성합니다.
-db.js 파일을 수정하여 MariaDB의 연결 정보를 입력합니다.
-
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'your_password',  // 수정 필요
-    database: 'mydatabase'      // 수정 필요
-});
-
-기능
-웹 서버는 사용자의 요청을 받아 애플리케이션 서버로 전달합니다.
-애플리케이션 서버는 데이터베이스와 상호작용하여 데이터를 처리하고, 그 결과를 웹 서버로 반환합니다.
-애플리케이션 서버의 /api/endpoint 경로는 사용자의 요청을 받아 처리하며, 예시로 사용자의 정보를 반환하는 API 엔드포인트가 구현되어 있습니다.
----
-개발 환경
-PHP 7.x 이상 (웹 서버)
-Node.js 14.x 이상 (애플리케이션 서버)
-MariaDB 10.x 이상 (데이터베이스)
+**4. 네트워크 및 보안 설정**
+	•	애플리케이션 서버와 데이터베이스 서버 간의 연결을 허용하려면 보안 그룹과 방화벽 규칙을 설정해야 합니다.
+	•	각 서버는 적절한 포트 (예: 3000, 3306)가 열려 있어야 합니다.
