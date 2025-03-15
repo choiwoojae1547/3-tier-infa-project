@@ -43,7 +43,7 @@ sudo apt install apache2 php libapache2-mod-php
 sudo cp /path/to/your/index.php /var/www/html/
 
 
-**###3. 데이터베이스 서버 설정 (MariaDB)**
+**3. 데이터베이스 서버 설정 (MariaDB)**
 # MariaDB 설치
 sudo apt update
 sudo apt install mariadb-server
